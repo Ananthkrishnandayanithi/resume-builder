@@ -187,36 +187,60 @@ def extract_text_from_docx(file):
 
 
 def extract_text_from_upload(file):
-    if file.endswith(".pdf"):
-        text = extract_text_from_pdf(file)
-        return text
-    elif file.endswith(".docx"):
-        text = extract_text_from_docx(file)
-        return text
-    elif file.endswith("json"):
-        return file.getvalue().decode("utf-8")
-    else:
-        return file.getvalue().decode("utf-8")
+    try:
+        if file.endswith(".pdf"):
+            return extract_text_from_pdf(file)
+        elif file.endswith(".docx"):
+            return extract_text_from_docx(file)
+        elif file.endswith(".txt"):
+            return file.read().decode("utf-8")  # Handle text files
+        else:
+            raise ValueError("Unsupported file format. Please upload a PDF, DOCX, or TXT file.")
+    except Exception as e:
+        return f"Error processing file: {str(e)}"
 
-def generate_section_content(section_name, extracted_text, template, job_description, model, api_key):
+import time
+def generate_section_content(section_name, extracted_text, template, job_description, model, api_key, retries=3, delay=2):
     """
     Generate tailored LaTeX content for a section using the LLM.
     """
     prompt = f"""
-    Generate a LaTeX formatted resume section for {section_name} based on the following:
+    Generate LaTeX formatted content for the {section_name} section based on the following:
     - Extracted content: {extracted_text}
-    - Section template: {template}
+    - Template: {template}
     - Job description: {job_description}
-    - Each point should not exceed 80 letters
-    - Make sure that the the details filled in the template without changing any syntax and the number of bullet points should always be same
-    - The details should be modified enhanced to match 100 percent to the job description with little bluffing and adding additional content
-    - Each data should not be precisely within a single line
-    The output should only include LaTeX code for the section, formatted professionally.
+    Instructions:
+    - Keep bullet points concise (80 characters max).
+    - Fill the template without altering syntax or structure.
+    - Tailor content to align with the job description, adding inferred content if necessary.
+    Output should be LaTeX code only.
     """
-    genai.configure(api_key=api_key)
-    model_instance = genai.GenerativeModel(model)
-    response = model_instance.generate_content(prompt)
-    return response.text if response else ""
+
+    for attempt in range(retries):
+        try:
+            # Configure the API with the provided key
+            genai.configure(api_key=api_key)
+            model_instance = genai.GenerativeModel(model)
+            
+            # Generate content using the prompt
+            response = model_instance.generate_content(prompt)
+
+            # Check if the response is valid
+            if not response or not response.text:
+                raise Exception("Empty response from the API.")
+            
+            # Return the generated content if successful
+            return response.text
+        
+        except Exception as e:
+            # Log the error and retry if applicable
+            print(f"Error generating section '{section_name}' (Attempt {attempt + 1} of {retries}): {e}")
+            if attempt < retries - 1:
+                print(f"Retrying after {delay} seconds...")
+                time.sleep(delay)
+            else:
+                print(f"All {retries} attempts failed for section: {section_name}")
+                return f"Error in {section_name}: Unable to generate content."
 
 
 def tailor_resume(cv_text, api_key, model, job_description):
@@ -239,6 +263,10 @@ def tailor_resume(cv_text, api_key, model, job_description):
         6. Include hypothetical or inferred project examples that showcase the application of required skills and technologies.
         7. Avoid providing templates or generic instructions. Ensure professional formatting and accurate grammar.
         8. Ensure the final output is concise, polished, and immediately usable for the job application.
+        9. Uses ATS-friendly formatting with clear section headers (e.g., Skills, Experience).
+        10.Includes keywords from the job description in context.
+        11.Avoids tables, graphics, or unusual formatting.
+        12.Aligns with one-page A4 size limit
         
         Job Description and required qualifications:
         {job_description}
