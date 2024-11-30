@@ -1,0 +1,68 @@
+
+Personal_details:
+\section{personal_details}
+**HARIHARA SUDHAN N**
+
+nhsharsudhan2307@gmail.com | +91-6379375416
+
+26 B, Yadhavar South New Street, Vallioor -627117, Tirunelveli district, Tamilnadu
+
+
+Skills:
+\section{skills}
+**Technical Skills**
+
+* **Programming Languages:** Python, SQL, JavaScript (Added based on job description)
+* **Frameworks & Libraries:**  React.js (Added based on job description)
+* **Tools & Technologies:**  Power BI,  Git (Inferred from experience)
+* **Databases:** SQL Server
+
+
+
+
+Experience:
+\section{experience}
+**WORK EXPERIENCE**
+
+**Intern Trainee - Data Analytics** | RIOTA Private Limited, Chennai, Tamil Nadu | Oct 2023 – Apr 2024
+
+* Streamlined data processing using Python, Pandas, and SQL, ensuring data integrity and high-quality standards.
+* Developed data transformation functionalities, mirroring software testing methodologies.
+* Created a Power BI dashboard visualizing transactional data, improving machine efficiency.  Utilized Python for data analysis and automation.
+
+
+Projects:
+\section{projects}
+Given the applicant's background in Mechanical Engineering and focus on data analytics/Python,  a direct match to the React.js front-end developer role is weak.  However, we can highlight transferable skills by focusing on projects demonstrating problem-solving, data analysis, and technical proficiency.  The job description emphasizes front-end development, which is absent from the applicant's experience.  Therefore, we will focus on showcasing transferable skills.
+
+Here's a revised Projects section focusing on transferable skills:
+
+
+**Projects**
+
+1. **Project Title:** Pandas Data Wizard: Streamlining Data Processing
+   **Start and End Date:**  [Insert Dates - likely Oct 2023 - Apr 2024, if this was during internship]
+   **Brief Description:** Designed & implemented data transformation tool improving data integrity and efficiency.
+   **Tools/Technologies Used:** Python, Pandas, ETL, SQL, Data Integrity processes
+   **Key Achievement:**  Improved data processing speed and ensured data uniformity, leading to more reliable insights. (Quantify if possible, e.g., "Reduced processing time by X%")
+
+
+2. **Project Title:** Transaction Efficiency Analysis and Optimization
+   **Start and End Date:** [Insert Dates - likely Oct 2023 - Apr 2024, if this was during internship]
+   **Brief Description:** Analyzed transactional data to optimize machine efficiency and create performance dashboards.
+   **Tools/Technologies Used:** Python, Pandas, Power BI, SQL, Excel
+   **Key Achievement:** Developed a dashboard improving machine efficiency by [Quantify improvement if possible, e.g., "X%"].
+
+
+**Note:**  The "Evaluation of Stress Concentration Factor" project, while impressive, is less relevant to the front-end developer role and should be omitted or placed lower in priority in the resume.  The focus needs to be on skills that *do* align with the job description, even if it means omitting some accomplishments.  The applicant should strongly consider gaining some experience with front-end technologies (like React) to improve their chances of securing this type of role.
+
+
+Education:
+\section{education}
+**Education**
+
+* **Bachelor of Engineering (B.E.) - Mechanical Engineering** | Government College of Engineering, Tirunelveli | 2019 - 2023 | CGPA: 7.85  *(While not directly related to the React.js developer role, this demonstrates a strong foundation in engineering principles and problem-solving, transferable skills valued in software development.)*
+* **Higher Secondary Education (Maths – Biology)** | Kings Matric Higher Secondary School, Valliyur | 2017 - 2019 | Grade: 80%
+
+
+

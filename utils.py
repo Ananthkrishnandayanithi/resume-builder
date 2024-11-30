@@ -66,7 +66,7 @@ def generate_section_content(section_name, extracted_text, template, job_descrip
         response = model_instance.generate_content(prompt)
         return response.text if response else "No content generated."
     except Exception as e:
-        print(f"Error generating section content: {e}")
+        
         return "Error generating section content."
 
 def tailor_resume(cv_text, api_key, model, job_description):
@@ -94,7 +94,7 @@ def tailor_resume(cv_text, api_key, model, job_description):
         response = model_instance.generate_content(prompt)
         return response.text if response else "Failed to generate tailored resume."
     except Exception as e:
-        print(f"Error tailoring resume: {e}")
+       
         return "Error generating tailored resume."
 
 # Example usage
@@ -104,10 +104,7 @@ if __name__ == "__main__":
     api_key = "<Your_API_Key>"
     model = "<Model_Name>"
     job_description = "<Job Description>"
-    print("CV Text:", cv_text)
-    print("API Key:", api_key)
-    print("Model:", model)
-    print("Job Description:", job_description)
+    
 
 
     tailored_resume = tailor_resume(cv_text, api_key, model, job_description)
