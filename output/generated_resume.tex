@@ -1,4 +1,13 @@
 ```latex
+\documentclass{article}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{multicol}
+\usepackage{enumitem}
+
+\newcommand{\hrefWithoutArrow}[2]{\href{#1}{#2}}
+
 \begin{document}
     \newcommand{\AND}{\unskip
         \cleaders\copy\ANDbox\hskip\wd\ANDbox
@@ -6,182 +15,87 @@
     }
     \newsavebox\ANDbox
     \sbox\ANDbox{$|$}
-    \begin{header}
-        \fontsize{25 pt}{25 pt}\selectfont D Anantha Krishnan\\
-        \vspace{5 pt}
+
+    \begin{center}
+        \fontsize{25pt}{25pt}\selectfont SHIVANSWAMYNATHAN .S
+        \vspace{5pt}
         \normalsize
-        \mbox{Chennai, India} \AND%\
-        \mbox{\href{mailto:anantdayanithi@gmail.com}{anantdayanithi@gmail.com}} \AND%\
-        \mbox{\href{tel:+91-6383168402}{+91 6383168402}} \AND%\
-        \mbox{\href{https://www.linkedin.com/in/anantha-krishnan-d-b13689201/}{linkedin.com/in/anantha-krishnan-d-b13689201/}} 
-    \end{header}
-    \vspace{5 pt - 0.3 cm}
+        \mbox{\hrefWithoutArrow{mailto:shivanswamynathan@gmail.com}{shivanswamynathan@gmail.com}}
+        \hspace{5pt} | \hspace{5pt}
+        \mbox{\hrefWithoutArrow{tel:+91-7550240700}{+91-7550240700}}
+        \hspace{5pt} | \hspace{5pt}
+        \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/shivanswamynathan}{linkedin.com/in/shivanswamynathan}}
+    \end{center}
+    \vspace{1cm}
+
+    \section{Skills}
+    \begin{itemize}[noitemsep, topsep=0pt]
+        \item \textbf{Languages:} Python, JavaScript, TypeScript
+        \item \textbf{Frameworks:} ReactJS, LangChain, Redux
+        \item \textbf{Technologies:} Node.js, RESTful APIs, LLMs, Power BI
+        \item \textbf{Tools:} npm, Yarn, Streamlit, Git, IDEs
+    \end{itemize}
+    \vspace{1cm}
+
+    \section{Experience}
+    \begin{itemize}[noitemsep, topsep=0pt]
+        \item \textbf{Data Scientist}, OMEXON TECHNOLOGIES, August 2024 - Present
+            \begin{itemize}[noitemsep, topsep=0pt]
+                \item Developed AI-driven data science solutions using LangChain, ML, and Generative AI for NLP applications, enhancing data analysis by 15\%.
+                \item Collaborated with cross-functional teams to deploy machine learning models, extracting actionable insights from complex datasets, resulting in a 10\% improvement in decision-making.
+                \item Implemented LLMs to automate tasks, enhancing customer experience and leading to a 20\% increase in user satisfaction.
+                \item Utilized Python and relevant technologies to build and deploy models, contributing to the successful completion of 5 data-driven projects.
+            \end{itemize}
+        \item \textbf{Machine Learning Engineer}, Robert Bosch Engineering and Business Solutions
+            \begin{itemize}[noitemsep, topsep=0pt]
+                \item Contributed to developing the Artificial Coder Engine, automating coding tasks and improving development workflows by 12\%.
+                \item Assisted in designing, testing, and debugging machine learning models and algorithms using Python and AI/ML frameworks, reducing model development time by 8\%.
+                \item Implemented software development best practices, improving code quality and maintainability in an enterprise setting, leading to a 5\% reduction in bugs.
+                \item Gained hands-on experience with Python, AI/ML frameworks, contributing to improved software development processes.
+            \end{itemize}
+        \item \textbf{AI/ML Engineer}, emTarang TechLabs Pvt. Ltd.
+            \begin{itemize}[noitemsep, topsep=0pt]
+                \item Designed and implemented an automation model for extracting cricket highlights using AI/ML, streamlining content creation by 30\%.
+                \item Enhanced viewer experience by providing automated highlight videos, optimizing content delivery and increasing viewer engagement by 18\%.
+                \item Leveraged cloud computing and machine learning models for video processing automation, improving efficiency and scalability by 25\%.
+                \item Utilized Python and relevant technologies to build and deploy models, resulting in improved content delivery and engagement.
+            \end{itemize}
+    \end{itemize}
+    \vspace{1cm}
+
+    \section{Projects}
+    \begin{itemize}[noitemsep, topsep=0pt]
+        \item \textbf{React.js based Interactive Data Visualization Dashboard}, October 2023 - December 2023
+            \begin{itemize}[noitemsep, topsep=0pt]
+                \item Developed a responsive data visualization dashboard using React.js, HTML, CSS, and JavaScript.
+                \item Implemented interactive charts using Chart.js, enabling data exploration via filtering and zooming.
+                \item Optimized the dashboard for performance and responsiveness across devices and browsers.
+                \item Integrated the dashboard with a RESTful API for dynamic data updates, providing real-time information.
+            \end{itemize}
+        \item \textbf{AI-Powered Data Analysis and Chatbot Integration Platform}, August 2024 - Present
+            \begin{itemize}[noitemsep, topsep=0pt]
+                \item Created a user-friendly data upload interface using Python (Streamlit) for seamless data integration.
+                \item Implemented AI/ML models for insightful statistical and predictive analysis, providing actionable trends.
+                \item Integrated a chatbot using LLMs for user interaction, enabling data-specific queries and context-aware answers.
+                \item Designed dynamic data visualizations with Power BI dashboards, facilitating real-time insights and reporting.
+            \end{itemize}
+        \item \textbf{Automated Cricket Highlights Extraction}, June 2023 - August 2023
+            \begin{itemize}[noitemsep, topsep=0pt]
+                \item Developed a deep learning model to automatically generate cricket highlights from raw match footage, achieving 90\% accuracy.
+                \item Extracted and processed audio features from commentary to identify key match moments based on excitement.
+                \item Trained the model to accurately classify highlights based on audio features, ensuring high-quality output.
+                \item Deployed the solution on cloud infrastructure for scalability and real-time processing of sports content.
+            \end{itemize}
+    \end{itemize}
+    \vspace{1cm}
+
+    \section{Education}
+    \begin{itemize}[noitemsep, topsep=0pt]
+        \item \textbf{M.Sc. Data Science}, Coimbatore Institute of Technology, Coimbatore, India, July 2017 - June 2022, 8.1/10
+            \begin{itemize}[noitemsep, topsep=0pt]
+                \item \textbf{Coursework:} Machine Learning, Data Analytics, Big Data Technologies, Python, R, SQL, AI Frameworks, Predictive Modeling, Data Process Automation
+            \end{itemize}
+    \end{itemize}
+
 \end{document}
 ```
-
-**Note:**  The provided job description focuses heavily on React.js skills, which are not prominently featured in the candidate's experience.  The resume header remains unchanged as it is concise and well-formatted.  To make this resume more competitive for the React.js developer position,  substantial additions highlighting relevant skills (React, Node.js, etc.) and projects would be necessary in the "Skills" and "Projects" sections.  Simply adding a GitHub link doesn't address the core mismatch in skills.  Consider creating a new resume targeted at this job opening.
-
-\section{Technologies}
-\begin{onecolentry}
-\textbf{Languages:} Python, SQL, JavaScript
-\end{onecolentry}
-\vspace{0.05 cm}
-\begin{onecolentry}
-\textbf{Frameworks/Libraries:} Flask, Keras,  NumPy, Pandas,  Selenium,  Matplotlib
-\end{onecolentry}
-\vspace{0.05 cm}
-\begin{onecolentry}
-\textbf{Tools:}  Power BI, Postman,  GitHub, Pytest,  RPA, httpx,  OpenCV,  Streamlit
-\end{onecolentry}
-\vspace{0.05 cm}
-\begin{onecolentry}
-\textbf{Databases:} SQLite, SAP
-\end{onecolentry}
-\vspace{0.05 cm}
-\begin{onecolentry}
-\textbf{Other:} REST APIs, VBScript,  Web Scrapy,  AI/ML, Deep Learning,  NLP
-\end{onecolentry}
-
-
-\section{Experience}
-\begin{twocolentry}{Feb 2024 – Sep 2024}
-\textbf{Software Engineer Trainee}, Beez Innovation Labs\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item Developed RPA solutions for SAP automation.
-\item Automated web scraping using Web Scrapy.
-\item Integrated Python automation with DMS using HTTPx.
-\item Contributed to Python automation bot library.
-\item Collaborated on scalable automation solutions.
-\item Automated SOX control processes in SAP.
-\item Created generic SAP automation bots (SE16).
-\item Developed Selenium web automation scripts.
-\item Automated Excel tasks using Python libraries.
-\end{highlights}
-\end{onecolentry}
-\vspace{0.2 cm}
-\begin{twocolentry}{Apr 2021 - June 2021}
-\textbf{Web Developer}, The Spark Foundation\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item Developed a basic banking system.
-\item Used HTML, CSS, and Python (SQLite).
-\item Created front-end and back-end integration.
-\end{highlights}
-\end{onecolentry}
-
-
-\section{Education}
-\begin{twocolentry}{2020-2024}
-\textbf{B.Tech, Computer Science \& Medical Engineering}, \\Sri Ramachandra Faculty of Engineering \& Technology
-\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item CGPA: 8.1
-\item Relevant Coursework:  Data Structures, Algorithms, Database Systems.
-\end{highlights}
-\end{onecolentry}
-\vspace{0.10 cm}
-\begin{twocolentry}{2019-2020}
-\textbf{HSC (CBSE)}, St. John’s Senior Secondary School
-\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item CGPA: 7.6
-\end{highlights}
-\end{onecolentry}
-\vspace{0.10 cm}
-\begin{twocolentry}{2017-2018}
-\textbf{SSLC (CBSE)}, St. John’s Senior Secondary School
-\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item CGPA: 7.2
-\end{highlights}
-\end{onecolentry}
-\vspace{0.10 cm}
-\begin{twocolentry}{}
-\textbf{Python Data Science}, Besant Technology
-\end{twocolentry}
-
-
-\section{Projects}
-\begin{twocolentry}{Dec 2022 - Feb 2023}
-\textbf{Cancer Cell Detection}
-\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item U-Net for nucleus segmentation.
-\item Binary classification.
-\item Streamlit app deployment.
-\item TensorFlow & Keras used.
-\end{highlights}
-\end{onecolentry}
-\vspace{0.2 cm}
-\begin{twocolentry}{May 2023 - Jul 2023}
-\textbf{Hand Sign Detection}
-\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item CNN for hand gesture recognition.
-\item Keras & TensorFlow for model building.
-\item Data augmentation techniques used.
-\end{highlights}
-\end{onecolentry}
-\vspace{0.2 cm}
-\begin{twocolentry}{Aug 2023 - Oct 2023}
-\textbf{Telecom Churn Prediction}
-\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item Logistic Regression, SVM, Random Forest.
-\item KNN, Naive Bayes models compared.
-\item Random Forest best performer.
-\end{highlights}
-\end{onecolentry}
-\vspace{0.2 cm}
-\begin{twocolentry}{Mar 2023 - Apr 2023}
-\textbf{ICET Data Analyst}
-\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item WhatsApp chat sentiment analysis.
-\item Python, Pandas, NLTK, Scikit-learn.
-\item Power BI for data visualization.
-\end{highlights}
-\end{onecolentry}
-\vspace{0.2 cm}
-\begin{twocolentry}{Feb 2024 - Sep 2024}
-\textbf{SOX Control Automation}
-\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item SAP automation with Python bots.
-\item Selenium for web automation.
-\item Excel automation with Pandas.
-\end{highlights}
-\end{onecolentry}
-\vspace{0.2 cm}
-\begin{twocolentry}{Apr 2021 - Jun 2021}
-\textbf{Banking System}
-\end{twocolentry}
-\vspace{0.10 cm}
-\begin{onecolentry}
-\begin{highlights}
-\item HTML, CSS, Python, SQLite.
-\item Account management, transactions.
-\item Full-stack web development.
-\end{highlights}
-\end{onecolentry}
-
-

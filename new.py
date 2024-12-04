@@ -9,6 +9,7 @@ from langchain_google_genai.llms import GoogleGenerativeAI
 import json
 import re
 
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "uploads"
 app.config['OUTPUT_FOLDER'] = "output"
@@ -142,6 +143,76 @@ education_prompt = PromptTemplate(
     Return the output as structured text formatted for inclusion in a resume.
     """
 )
+validation_prompts = {
+    "Personal Details": PromptTemplate(
+        input_variables=["extracted_content", "resume_content", "job_description"],
+        template=""" 
+        Response: {extracted_content}
+        Resume: {resume_content}
+        Job Description: {job_description}
+    
+### Instructions for Validation and Update:
+1. *Cross-Check with Resume Context*:
+    - Compare the generated JSON response with your provided resume details.
+    - Validate that fields such as Full Name, Email, Phone, Location, Date of Birth, Languages, and LinkedIn match your resume text.
+
+2. *Validation Rules*:
+    - Check each field against your resume details to ensure correctness and consistency.
+    - Ensure no field contains null, empty, or placeholder values.
+    - Validate the format and structure of each field as follows:
+        - *Full Name*: Matches the name in the resume. Ensure proper capitalization.
+        - *Email*: Valid format, including "@" and a correct domain (e.g., ".com", ".org").
+        - *Phone*: Includes a country code and is numeric. Correct any minor formatting issues (e.g., missing "+" or extra characters).
+        - *Location*: Matches your resume location (City, Country). Correct capitalization if needed.
+        - *Date of Birth*: Validate format (MM/DD/YYYY) if included.
+        - *Languages*: Verify listed languages are relevant and match your resume.
+        - *LinkedIn*: Ensure it is a valid URL starting with "https://www.linkedin.com/".
+
+3. *Error Correction*:
+    - If any field is invalid, not properly formatted, or not present in the resume, remove it entirely from the JSON.
+    - Ensure consistency across all fields, especially capitalization, punctuation, and formatting.
+
+4. *Final Output*:
+    - Don't change the existing format.
+        """
+    ),
+    "Skills": PromptTemplate(
+        input_variables=["extracted_content", "resume_content", "job_description"],
+        template=""" 
+        response: {extracted_content}
+        Resume: {resume_content}
+        Job Description: {job_description}
+        
+        ### Instructions for Validating and Updating Skills:
+
+1. *Cross-Check with Resume Content*:
+    - Validate the skills in the generated JSON against the skills listed in the resume content.
+    - Ensure that all skills are consistent with the resume's listed technologies, languages, frameworks, and tools.
+
+2. *Validation Rules*:
+    - *Languages*: Ensure the programming languages are valid and match those mentioned in the resume.
+    - *Frameworks*: Verify that the frameworks or libraries listed are consistent with the resume.
+    - *Technologies*: Cross-check if the technologies mentioned in the skills match the resume content (e.g., AWS, Docker, Azure).
+    - *Tools*: Ensure tools and software such as Git, JIRA, and others are correctly listed.
+
+3. *Skill Limit*:
+    - Ensure that the total number of skills across all categories does not exceed *20*.
+    - Each skill should be concise, and the total list of skills should be readable and ATS-friendly.
+
+4. *Error Correction*:
+    - Ensure no field contains null, placeholder values, or empty values.
+    - If any skill is invalid or does not align with the resume content, remove it.
+    - If a skill is missing but is relevant and implied from the resume (e.g., through related experience), include it.
+
+5. *Final Output*:
+    - Return the cleaned and updated skills section, formatted as a JSON object.
+    - Ensure each skill is well-formatted, concise, and does not exceed *100 characters* including spaces.
+
+6. *Formatting*:
+    - Don't change the existing format.
+    """
+    )
+}
 
 # Function to extract text from uploaded file (PDF or DOCX)
 def extract_text_from_upload(filepath):
@@ -159,6 +230,35 @@ def extract_section_names(latex_content):
     """
     section_names = re.findall(r'\\section\{(.*?)\}', latex_content)
     return section_names
+
+def generate_and_validate_section(content, resume_content, job_description, section_name, api_key):
+    chains = initialize_chains(api_key)
+    
+    # Generate section content from model
+    chain = chains.get(section_name)
+    if chain:
+        generated_output = chain.run({"content": content, "job_description": job_description})
+        
+        # Print the generated output before validation
+        print(f"Generated output for {section_name} before validation:\n{generated_output}")
+        
+        # Select the appropriate validation chain for the section
+        validation_chain = create_chain(api_key, validation_prompts.get(section_name))
+        
+        if validation_chain:
+            # Pass the generated content, resume, and job description to the validation chain
+            validated_output = validation_chain.run({
+                "extracted_content": generated_output,
+                "resume_content": resume_content,
+                "job_description": job_description
+            })
+            
+            # Print the updated (validated) output after validation
+            print(f"Updated output for {section_name} after validation:\n{validated_output}")
+            return validated_output
+        
+    return f"Section {section_name} is not supported."
+
 
 # Function to generate LaTeX section content
 def generate_section_content(section, extracted_text, template, job_description, genai_model, api_key):
@@ -186,34 +286,35 @@ def generate_section_content(section, extracted_text, template, job_description,
     return f"\\section{{{section}}}\n{response}"
 
 # Function to convert LaTeX content to plain text format
-def convert_latex_to_text(latex_content):
-    """
-    Convert the generated LaTeX content into a plain text formatted resume.
-    """
-    section_map = {
-        "personal_details": "Personal Details",
-        "skills": "Technical Skills",
-        "experience": "Work Experience",
-        "projects": "Projects",
-        "education": "Education"
-    }
+# Commenting this out as we now want LaTeX output
+# def convert_latex_to_text(latex_content):
+#     """
+#     Convert the generated LaTeX content into a plain text formatted resume.
+#     """
+#     section_map = {
+#         "personal_details": "Personal Details",
+#         "skills": "Technical Skills",
+#         "experience": "Work Experience",
+#         "projects": "Projects",
+#         "education": "Education"
+#     }
 
-    # Remove LaTeX formatting and convert to plain text
-    lines = latex_content.split("\n")
-    plain_text = []
+#     # Remove LaTeX formatting and convert to plain text
+#     lines = latex_content.split("\n")
+#     plain_text = []
 
-    for line in lines:
-        # Remove LaTeX section headers
-        if line.startswith("\\section{"):
-            section = line.split("{")[1].split("}")[0].lower()
-            section_name = section_map.get(section, section.capitalize())
-            plain_text.append(f"\n{section_name}\n")
-        elif line.startswith("\\") or not line.strip():
-            continue
-        else:
-            plain_text.append(line.strip())
+#     for line in lines:
+#         # Remove LaTeX section headers
+#         if line.startswith("\\section{"):
+#             section = line.split("{")[1].split("}")[0].lower()
+#             section_name = section_map.get(section, section.capitalize())
+#             plain_text.append(f"\n{section_name}\n")
+#         elif line.startswith("\\") or not line.strip():
+#             continue
+#         else:
+#             plain_text.append(line.strip())
 
-    return "\n".join(plain_text)
+#     return "\n".join(plain_text)
 
 @app.route('/generate_resume', methods=['POST'])
 def generate_resume():
@@ -256,14 +357,14 @@ def generate_resume():
             )
             results[section] = generated_content
 
-        # Save the results to a plain text file for output
-        output_file = os.path.join(app.config['OUTPUT_FOLDER'], "generated_resume.txt")
+        # Save the results to a LaTeX file for output
+        output_file = os.path.join(app.config['OUTPUT_FOLDER'], "generated_resume.tex")
         with open(output_file, 'w') as f:
             for section, content in results.items():
-                f.write(f"\n{section.capitalize()}:\n{content}\n")
+                f.write(f"\n{content}\n")
 
         # Return a success response
-        return jsonify({"message": "Resume generated successfully", "file_path": output_file}), 200
+        return jsonify({"message": "Resume generated successfully in LaTeX format", "file_path": output_file}), 200
 
     except Exception as e:
         print(f"Error generating resume: {e}")
@@ -272,3 +373,4 @@ def generate_resume():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
